@@ -9,8 +9,5 @@
             console.error("Error: User not found. Please check the username and try again.");
         }
     }
-
-
-    
 }
 
