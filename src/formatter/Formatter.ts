@@ -1,7 +1,8 @@
  import { UserEvent } from "../github/types";
-class Formatter {
+
+export class Formatter {
     
-    formatEvents(events: Array<UserEvent>) : string {
+    static formatEvents(events: Array<UserEvent>) : string {
        for(const event of events) {
            if(event.type === "PushEvent") {
             return `Pushed to ${event.payload.length} commits to ${event.repo.name}`;
