@@ -3,15 +3,34 @@
 export class Formatter {
     
     static formatEvents(events: Array<UserEvent>) : string {
-       for(const event of events) {
-           if(event.type === "PushEvent") {
-            return `Pushed to ${event.payload.length} commits to ${event.repo.name}`;
-            } else if(event.type === "IssuesEvent") {
-                return `Opened a new issue in  in ${event.repo.name}`;
-            } else if(event.type === "PullRequestEvent") {
-                return `Created a pull request  in ${event.repo.name}`;
+        if(events.length === 0) {
+            return "No events found for this user.";
+        }
+
+        const formatterEvents : string [] = [];
+
+
+        for(const event of events) {
+            let formatEvent : string  = "";
+            switch(event.type) {
+                case "PushEvent":
+                    formatEvent = "Pushed " + event.payload.commits.length + " commits to " + event.repo.name;
+                    break;
+                case "IssuesEvent":
+                    formatEvent = "Opend a new issue in " + event.repo.name;
+                    break;
+                case "PullRequestEvent":
+                    formatEvent = "Starred  " + event.repo.name;
+                    break;
+                case "PushEvent":
+                    formatEvent = "Pushed to " + event.repo.name;
+                    break;
+                default:
+                    formatEvent = `Performed ${event.type} on ${event.repo.name}`;
             }
-       }
-         return "No recognizable events found.";
+            formatterEvents.push(formatEvent);
+        }
+       
+        return formatterEvents.join("\n");
     }
-}
+};

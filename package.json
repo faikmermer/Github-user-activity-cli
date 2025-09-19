@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "prepare": "npx tsc",
+    "dev": "ts-node src/index.ts",
+    "cli": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +19,8 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "rm": "^0.1.8"
   },
   "bin": {
     "github-activity": "./dist/index.js"

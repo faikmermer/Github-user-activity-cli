@@ -7,9 +7,9 @@ export class GithubClient {
         const response : Response = await fetch((`${this.baseUrl}/users/${username}/events`));
 
         if(!response.ok) {
-           new GithubError("Failed to fetch user events", response.status);
+          throw new GithubError("Failed to fetch user events", response.status);
         }
-        const jsonData: Array<UserEvent> = await response.json();
-        return jsonData;
+        const jsonData: Array<UserEvent> = await response.json() as Array<UserEvent>;
+        return jsonData || [];
     }
 }

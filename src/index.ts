@@ -1,15 +1,23 @@
+#! /usr/bin/env node
 import { GithubClient } from "./github/GithubClient";
 import {Formatter} from "./formatter/Formatter";
-const args : string[] = process.argv.slice(1);
-const username : string = args[0] as string;
+import { GithubError } from "./errors/GithubError";
 
-if(username.length < 2) {
-    console.error("Please provide a GitHub username as a command-line argument.");
+const args = process.argv.slice(2);
+const username = args[0];
+
+if(!username) {
+    console.error("Error: Please provide a GitHub username as a command-line argument.");
     process.exit(1);
 }
 
+
 const client = new GithubClient();
-client.getUserEvents(username)
+client.getUserEvents(username as string)
      .then(events => {
-        new Formatter().formatEvents(events);
+        console.log(Formatter.formatEvents(events));
+     })
+     .catch(error => {
+        const statusCode = error.responce?.status || 500;
+       throw new GithubError(error.message, statusCode);
      })
